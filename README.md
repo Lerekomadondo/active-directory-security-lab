@@ -146,20 +146,30 @@ Key outcomes included:
 Screenshots demonstrating the lab configuration, security event collection and Microsoft Sentinel detection results will be included below.
 
 ### 1. Azure Infrastructure
-*Evidence of the Azure virtual machine and network configuration.*
+
+![Azure Virtual Machine](screenshots/01-azure-vm.png)
 
 ### 2. Active Directory Configuration
-*Evidence of the domain, organisational units, users and security groups.*
+
+![Active Directory Users](screenshots/03-active-directory-users.png)
+
+![Security Group](screenshots/04-security-group.png)
 
 ### 3. Log Collection
-*Evidence of the Data Collection Rule and Windows security events in Log Analytics.*
 
-### 4. Detection Rules
-*Evidence of the four Microsoft Sentinel analytics rules.*
+![Data Collection Rule](screenshots/05-data-collection-rule.png)
 
-### 5. Security Incidents
-*Evidence of alerts and incidents generated during controlled testing.*
+### 4.  Microsoft Sentinel Detection
 
+![Sentinel Analytics Rules](screenshots/07-sentinel-analytics-rules.png)
+
+![Sentinel Incidents](screenshots/08-sentinel-incidents.png)
+
+### 5. Security Investigation
+
+![Failed Logon Investigation](screenshots/09-failed-logon-investigation.png)
+
+![Account Creation Investigation](screenshots/10-account-creation-investigation.png)
 
 
 
