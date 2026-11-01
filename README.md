@@ -147,29 +147,29 @@ Screenshots demonstrating the lab configuration, security event collection and M
 
 ### 1. Azure Infrastructure
 
-![Azure Virtual Machine](screenshots/azure-vm.png)
+![Azure Virtual Machine](azure-vm.png)
 
 ### 2. Active Directory Configuration
 
-![Active Directory Users](screenshots/active-directory-users.png)
+![Active Directory Users](active-directory-users.png)
 
-![Security Group](screenshots/security-group.png)
+![Security Group](security-group.png)
 
 ### 3. Log Collection
 
-![Data Collection Rule](screenshots/data-collection-rule.png)
+![Data Collection Rule](data-collection-rule.png)
 
 ### 4.  Microsoft Sentinel Detection
 
-![Sentinel Analytics Rules](screenshots/sentinel-analytics-rules.png)
+![Sentinel Analytics Rules](sentinel-analytics-rules.png)
 
-![Sentinel Incidents](screenshots/sentinel-incidents.png)
+![Sentinel Incidents](sentinel-incidents.png)
 
 ### 5. Security Investigation
 
-![Failed Logon Investigation](screenshots/failed-logon-investigation.png)
+![Failed Logon Investigation](failed-logon-investigation.png)
 
-![Account Creation Investigation](screenshots/account-creation-investigation.png)
+![Account Creation Investigation](account-creation-investigation.png)
 
 
 
