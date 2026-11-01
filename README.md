@@ -120,18 +120,13 @@ The following activities were performed:
 
 These tests demonstrated that security events could be collected, queried and used to generate alerts and incidents in Microsoft Sentinel.
 
-### Findings and Learning Outcomes
-
-This project provided practical experience in building and monitoring an Active Directory environment using Microsoft Azure and Microsoft Sentinel.
-
-Key outcomes included:
-
-- Successfully deployed and configured an Active Directory Domain Controller.
-- Integrated Windows security event collection with Microsoft Sentinel.
-- Used KQL to extract and investigate account, group and authentication activity.
-- Configured four scheduled analytics rules for Active Directory security monitoring.
-- Generated and investigated security alerts and incidents from controlled test activities.
-- Gained practical experience with SIEM configuration, log analysis and detection engineering.
+### What I learned
+A detection is only as good as the telemetry behind it and the testing in front of it. Building this lab taught me five things.
+• What you collect decides what you can investigate. Filtering the DCR to five event IDs kept the data focused, but without successful logons (4624) I can see failed attempts and cannot tell whether an attacker eventually got in. Collection design is a detection decision, not a setup step.
+• Group scope matters. Domain Admins is a global group (4728), Administrators is domain local (4732), and Enterprise and Schema Admins are universal (4756). Detecting "someone joined a privileged group" means covering all three event IDs and matching on group names.
+• A rule that fires is not yet a good rule. Rules 2 to 4 alert on every matching event, so legitimate administration would trigger them. Who made the change, when, and to which group is what separates a real alert from noise. Rules 3 and 4 also overlap, so one privileged change can raise two incidents.
+• An untested detection is a hypothesis. Rules 1 to 3 were proven by generating the activity and seeing the incident. Rule 4 was only validated by its query logic, and I treat it as unproven until a real privileged-group change triggers it.
+• Self-generated telemetry is clean telemetry. I created every event from inside the lab, so the results show the pipeline works, not how the rules behave against real attacker noise.
 
 ### Future Improvements
 
