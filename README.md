@@ -98,6 +98,7 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Detection logic:** Identifies three or more failed logon attempts within a five-minute period.
 - **MITRE ATT&CK:** Credential Access, T1110 (Brute Force)
 - **Testing:** Tested by generating multiple incorrect password attempts.
+- **Severity:** Medium
 - **Entity mapping:** Account, Host, IP 
 
 
@@ -111,6 +112,7 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Purpose:** Detects the creation of new Active Directory user accounts.
 - **MITRE ATT&CK:** T1136 – Create Account
 - **Testing:** Tested by creating a new test account.
+- **Severity:** Medium
 - **Entity mapping:** Account (new account and creator), Host
 
 
@@ -124,7 +126,7 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Purpose:** Detects when users are added to global or local security groups.
 - **MITRE ATT&CK:** T1098 – Account Manipulation
 - **Testing:** Tested by adding test accounts to `SOC-Test-Group`.
-- **Severity:** Low to Medium
+- **Severity:** Medium
   
 
 ![Active Directory Users](active-directory-users.png)
@@ -140,11 +142,12 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Purpose:** Detects additions to sensitive groups such as Domain Admins, Enterprise Admins, Schema Admins and Administrators.
 - **MITRE ATT&CK:** T1098 – Account Manipulation
 - **Testing:** Detection query and group-name matching logic validated.
+- **Severity:** High
 
 
-![Active Directory Users](active-directory-users.png)
+![Active Directory Users](Lab-Administrators.png)
 
-![Security Group](security-group.png)
+![Target Group](target-group.png)
 
 
 
@@ -192,7 +195,7 @@ A detection is only as good as the telemetry behind it and the testing in front 
 
 • A rule that fires is not yet a good rule. Rules 2 to 4 alert on every matching event, so legitimate administration would trigger them. Who made the change, when, and to which group is what separates a real alert from noise. Rules 3 and 4 also overlap, so one privileged change can raise two incidents.
 
-• An untested detection is a hypothesis. Rules 1 to 3 were proven by generating the activity and seeing the incident. Rule 4 was only validated by its query logic, and I treat it as unproven until a real privileged-group change triggers it.
+• An untested detection is a hypothesis. Rules 1 to 3 were proven by generating the activity and seeing the incident. Rule 4 was only validated by its query logic, so I then ran a real privileged-group membership change to test it end-to-end .
 
 • Self-generated telemetry is clean telemetry. I created every event from inside the lab, so the results show the pipeline works, not how the rules behave against real attacker noise.
 
