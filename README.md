@@ -115,7 +115,7 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Purpose:** Detects when users are added to global or local security groups.
 - **MITRE ATT&CK:** T1098 – Account Manipulation
 - **Testing:** Tested by adding test accounts to `SOC-Test-Group`.
-- • Severity: Low to Medium
+- **Severity:** Low to Medium
   
 
 ![Active Directory Users](active-directory-users.png)
