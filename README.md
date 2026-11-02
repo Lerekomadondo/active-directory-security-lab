@@ -13,6 +13,8 @@ Microsoft Sentinel was used to develop analytics rules to detect suspicious acti
 #### Skills demonstrated
  - SIEM configuration, log collection design, KQL, detection engineering, MITRE ATT&CK mapping, alert testing and incident investigation.
 
+----
+
 ### Objectives
 
 - Deploy and configure an Active Directory Domain Controller in Azure.
@@ -23,7 +25,8 @@ Microsoft Sentinel was used to develop analytics rules to detect suspicious acti
 - Create analytics rules to detect suspicious Active Directory activity.
 - Map relevant detections to the MITRE ATT&CK framework.
 
-## Architecture
+---
+### Architecture
 
 The lab was deployed in Microsoft Azure using the following components:
 
@@ -37,6 +40,8 @@ The lab was deployed in Microsoft Azure using the following components:
 | Log Analytics Workspace (`law-soc-lab`) | Stores collected security event data. |
 | Microsoft Sentinel | Provides SIEM monitoring, analytics rules and incident investigation. |
 | Azure Bastion | Provides secure browser-based access to the virtual machine. |
+
+----
 
 ### Data Collection Flow
 
@@ -53,7 +58,7 @@ The lab was deployed in Microsoft Azure using the following components:
 
 Events move one way: the agent on the domain controller sends them through the DCR to the workspace, where Sentinel's four rules turn matches into alerts and incidents. Administrators reach the VM through Bastion.
 
-
+----
 ### Windows Security Events Monitored
 
 The DCR collects a deliberately small set of Security events rather than everything, to keep ingestion cost and noise down. The events are selected with XPath filters, for example:
@@ -77,7 +82,7 @@ The data connector used was Windows Security Events via AMA with a custom DCR. T
 ![Data Collection Rule](data-collection-rule.png)
 
 
-
+----
 ### Microsoft Sentinel Detection Rules
 
 Four scheduled analytics rules were configured in Microsoft Sentinel to monitor Active Directory security activity.
@@ -140,7 +145,7 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 ![Sentinel Incidents](sentinel-incidents.png)
 
 
-
+----
 ### Tools and Technologies
 
 | Tool / Technology | Usage |
@@ -154,6 +159,8 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 | Kusto Query Language (KQL) | Querying and investigating security events. |
 | Azure Bastion | Secure remote access to the Domain Controller. |
 | MITRE ATT&CK | Mapping detections to recognised attack techniques. |
+
+----
 
 ### Testing and Investigation
 
@@ -169,6 +176,8 @@ The following activities were performed:
 - Validated the privileged-group detection query without granting test accounts privileged access.
 
 These tests demonstrated that security events could be collected, queried and used to generate alerts and incidents in Microsoft Sentinel.
+
+----
 
 ### What I learned
 A detection is only as good as the telemetry behind it and the testing in front of it. Building this lab taught me five things.
