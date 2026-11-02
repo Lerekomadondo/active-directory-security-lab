@@ -139,10 +139,12 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Event IDs:** 4728, 4732 and 4756
 - **Purpose:** Detects additions to sensitive groups such as Domain Admins, Enterprise Admins, Schema Admins and Administrators.
 - **MITRE ATT&CK:** T1098 – Account Manipulation
-- **Testing:** Detection query and group-name matching logic validated. A real privileged-group membership change has not yet been generated to trigger the rule.
+- **Testing:** Detection query and group-name matching logic validated.
 
 
-### 5. Microsoft Sentinel Detection
+![Active Directory Users](active-directory-users.png)
+
+![Security Group](security-group.png)
 
 
 
