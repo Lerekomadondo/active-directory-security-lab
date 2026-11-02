@@ -10,6 +10,9 @@ Windows security events were collected using the Azure Monitor Agent (AMA) and a
 
 Microsoft Sentinel was used to develop analytics rules to detect suspicious activities, including repeated failed logon attempts, user account creation and security group membership changes.
 
+#### Skills demonstrated
+ - SIEM configuration, log collection design, KQL, detection engineering, MITRE ATT&CK mapping, alert testing and incident investigation.
+
 ### Objectives
 
 - Deploy and configure an Active Directory Domain Controller in Azure.
@@ -43,6 +46,9 @@ The lab was deployed in Microsoft Azure using the following components:
 4. Events are sent to the Log Analytics Workspace.
 5. Microsoft Sentinel analyses the data using KQL queries and analytics rules.
 6. Matching activity can generate security alerts and incidents.
+
+![Architecture](architecture.png)
+
 
 ## Windows Security Events Monitored
 
