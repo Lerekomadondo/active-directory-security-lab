@@ -87,6 +87,10 @@ The data connector used was Windows Security Events via AMA with a custom DCR. T
 
 Four scheduled analytics rules were configured in Microsoft Sentinel to monitor Active Directory security activity.
 
+![Sentinel Analytics Rules](sentinel-analytics-rules.png)
+
+![Sentinel Incidents](sentinel-incidents.png)
+
 ### 1. Repeated Failed Logon Detection
 
 - **Event ID:** 4625
@@ -140,9 +144,7 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 
 ### 5. Microsoft Sentinel Detection
 
-![Sentinel Analytics Rules](sentinel-analytics-rules.png)
 
-![Sentinel Incidents](sentinel-incidents.png)
 
 
 ----
