@@ -47,12 +47,21 @@ The lab was deployed in Microsoft Azure using the following components:
 5. Microsoft Sentinel analyses the data using KQL queries and analytics rules.
 6. Matching activity can generate security alerts and incidents.
 
+
+
 ![Architecture](architecture.png)
 
+Events move one way: the agent on the domain controller sends them through the DCR to the workspace, where Sentinel's four rules turn matches into alerts and incidents. Administrators reach the VM through Bastion.
 
-## Windows Security Events Monitored
 
-The Data Collection Rule (`dcr-ad-security-lab`) was configured to collect selected Windows Security events from the Domain Controller.
+### Windows Security Events Monitored
+
+The DCR collects a deliberately small set of Security events rather than everything, to keep ingestion cost and noise down. The events are selected with XPath filters, for example:
+
+ Security!*[System[(EventID=4625)]]
+
+The data connector used was Windows Security Events via AMA with a custom DCR. The relevant audit policy subcategories (Logon, User Account Management, Security Group Management) must be enabled on the DC for these events to be generated.
+
 
 | Event ID | Description | Security relevance |
 |---|---|---|
@@ -62,9 +71,14 @@ The Data Collection Rule (`dcr-ad-security-lab`) was configured to collect selec
 | 4732 | Member added to a local security group | Monitors local group membership changes. |
 | 4756 | Member added to a universal security group | Monitors universal group membership changes. |
 
-These events provide visibility into authentication activity, account creation and changes to group membership within the Active Directory environment.
 
-## Microsoft Sentinel Detection Rules
+
+
+![Data Collection Rule](data-collection-rule.png)
+
+
+
+### Microsoft Sentinel Detection Rules
 
 Four scheduled analytics rules were configured in Microsoft Sentinel to monitor Active Directory security activity.
 
@@ -73,8 +87,14 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Event ID:** 4625
 - **Purpose:** Detects repeated failed logon attempts.
 - **Detection logic:** Identifies three or more failed logon attempts within a five-minute period.
-- **MITRE ATT&CK:** T1110 – Brute Force
+- **MITRE ATT&CK:** Credential Access, T1110 (Brute Force)
 - **Testing:** Tested by generating multiple incorrect password attempts.
+- **Entity mapping:** Account, Host, IP 
+
+
+![Failed Logon Investigation](failed-logon-investigation.png)
+
+- Grouping by target account and source IP separates brute force (many attempts on one account) from password spraying (one source across many accounts, T1110.003). SubStatus distinguishes a wrong password (0xC000006A) from a non-existent user (0xC0000064).
 
 ### 2. User Account Creation Detection
 
@@ -82,6 +102,12 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Purpose:** Detects the creation of new Active Directory user accounts.
 - **MITRE ATT&CK:** T1136 – Create Account
 - **Testing:** Tested by creating a new test account.
+- **Entity mapping:** Account (new account and creator), Host
+
+
+  ![Account Creation Investigation](account-creation-investigation.png)
+
+- Capturing who created the account lets an analyst judge whether it was expected. Account creation outside business hours, or by a non-admin, should be treated as higher risk.
 
 ### 3. Security Group Membership Change Detection
 
@@ -89,6 +115,15 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Purpose:** Detects when users are added to global or local security groups.
 - **MITRE ATT&CK:** T1098 – Account Manipulation
 - **Testing:** Tested by adding test accounts to `SOC-Test-Group`.
+- • Severity: Low to Medium
+  
+
+![Active Directory Users](active-directory-users.png)
+
+![Security Group](security-group.png)
+
+- Privileged groups are excluded here and handled by Rule 4, so one change does not create two incidents.
+
 
 ### 4. Privileged Group Membership Change Detection
 
@@ -96,6 +131,15 @@ Four scheduled analytics rules were configured in Microsoft Sentinel to monitor 
 - **Purpose:** Detects additions to sensitive groups such as Domain Admins, Enterprise Admins, Schema Admins and Administrators.
 - **MITRE ATT&CK:** T1098 – Account Manipulation
 - **Testing:** Detection query and group-name matching logic validated. A real privileged-group membership change has not yet been generated to trigger the rule.
+
+
+### 5. Microsoft Sentinel Detection
+
+![Sentinel Analytics Rules](sentinel-analytics-rules.png)
+
+![Sentinel Incidents](sentinel-incidents.png)
+
+
 
 ### Tools and Technologies
 
@@ -139,43 +183,13 @@ A detection is only as good as the telemetry behind it and the testing in front 
 
 • Self-generated telemetry is clean telemetry. I created every event from inside the lab, so the results show the pipeline works, not how the rules behave against real attacker noise.
 
-### Future Improvements
 
-- Generate and investigate additional Active Directory security events.
-- Expand monitoring to include more privileged account and group activities.
-- Develop additional KQL detection queries.
-- Improve alert investigation and incident documentation.
-- Explore automated incident response using Microsoft Sentinel playbooks.
 
-### Screenshots and Evidence
 
-Screenshots demonstrating the lab configuration, security event collection and Microsoft Sentinel detection results will be included below.
 
-### 1. Azure Infrastructure
 
-![Azure Virtual Machine](azure-vm.png)
 
-### 2. Active Directory Configuration
 
-![Active Directory Users](active-directory-users.png)
-
-![Security Group](security-group.png)
-
-### 3. Log Collection
-
-![Data Collection Rule](data-collection-rule.png)
-
-### 4.  Microsoft Sentinel Detection
-
-![Sentinel Analytics Rules](sentinel-analytics-rules.png)
-
-![Sentinel Incidents](sentinel-incidents.png)
-
-### 5. Security Investigation
-
-![Failed Logon Investigation](failed-logon-investigation.png)
-
-![Account Creation Investigation](account-creation-investigation.png)
 
 
 
